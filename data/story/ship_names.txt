@@ -4,8 +4,9 @@ Elegy
 Final Serenade
 Luminous Lullaby
 Sentinel 11715
+Ultimate Hour
 Stormbringer
-Celestial Serpent
+Serpentis
 Abyss
 Sa-Matra
 Leviathan of Orion
@@ -20,11 +21,27 @@ Apocalypse
 Doom
 Archvile
 Reaper
-Ultimate Blackout
+Blackout
 Marduk
 Nemesis
+Andromeda
+Athena
+Reticuli
+Canopus
+Container
+Lawnmower
+Cosmic Bleach
+Starwiper
+4Bridge
 Hellbore
+Piranha
+Lord 320
+Death 787
+Red Trident
+Kikai
+Cheng Xin
+Funka Maru
+Bucket Destroyer
 Kohr-Ah
 Executor
 Sculptor
-

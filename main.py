@@ -22,11 +22,25 @@ SCREEN_X_2 = SCREEN_X * 0.5
 SCREEN_Y_2 = SCREEN_Y * 0.5
 
 def main():
+    print("")
+    print("The Dark Forest")
+    print("by arda-guler (https://github.com/arda-guler)")
+
     pygame.init()
     screen = pygame.display.set_mode([SCREEN_X, SCREEN_Y])
     pygame.display.set_caption("The Dark Forest")
     pygame.font.init()
     default_font = pygame.font.SysFont("Times New Roman", 20)
+
+    pygame.mixer.init()
+    sfx_photoid = pygame.mixer.Sound("data/sfx/photoid.ogg")
+    sfx_apocalypse = pygame.mixer.Sound("data/sfx/apocalypse.ogg")
+    sfx_resource = pygame.mixer.Sound("data/sfx/resource.ogg")
+    sfx_battle = pygame.mixer.Sound("data/sfx/battle.ogg")
+    sfx_fail = pygame.mixer.Sound("data/sfx/fail.ogg")
+    bgm_1 = pygame.mixer.Sound("data/bgm/open_fusion_lullaby.ogg")
+    chn_music = pygame.mixer.Channel(0)
+    chn_sfx = pygame.mixer.Channel(1)
 
     energy_text_placement = (int(SCREEN_X * 0.05), SCREEN_Y - 30)
     ship_name_placement = (int(SCREEN_X * 0.05), SCREEN_Y - 60)
@@ -43,6 +57,8 @@ def main():
     gathering_expense = 0.2
     projectiles = []
 
+    chn_music.play(bgm_1, -1)
+
     running = True
     player_move = False
     turns = 0
@@ -58,6 +74,7 @@ def main():
                 if player_sect.intelligence:
                     if player_sect.intelligence_class == "EXPANSIONIST":
                         player.energy -= player_sect.progress * random.uniform(0.5, 1.5) / 10
+                        chn_sfx.play(sfx_battle)
 
                 for idx_y in range(len(universe.sectors)):
                     for idx_x in range(len(universe.sectors[0])):
@@ -76,12 +93,15 @@ def main():
                                     sector.life = 0
                                     projectiles.remove(proj)
                                     del proj
+                                    chn_sfx.play(sfx_apocalypse)
 
                 if player.energy <= 0:
                     win_text_surface = default_font.render("STARSHIP OUT OF ENERGY - GAME OVER", False,
                                                            (255, 0, 0))
                     screen.blit(win_text_surface, win_text_placement)
                     pygame.display.flip()
+                    chn_music.stop()
+                    chn_sfx.play(sfx_fail)
                     time.sleep(8)
                     running = False
 
@@ -132,6 +152,7 @@ def main():
                             player.energy -= gathering_expense
                             player.energy += player_sect.resource_amount - 1
                             player_sect.resource_amount = 1
+                            chn_sfx.play(sfx_resource)
                     elif event.key == K_z:
                         if player.energy > 5:
                             player.energy -= 5
@@ -146,6 +167,7 @@ def main():
 
                             new_photoid = Photoid(new_photoid_pos, player.dir, grid_size)
                             projectiles.append(new_photoid)
+                            chn_sfx.play(sfx_photoid)
 
             screen.fill((0, 0, 0))
 
